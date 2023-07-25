@@ -1,6 +1,6 @@
 ############ Creating a Ledger ############
 resource "aws_qldb_ledger" "borage_ledger" {
-  name                = var.borage_ledger_name
+  name                = local.ledger_name
   permissions_mode    = "STANDARD"
   deletion_protection = false
 

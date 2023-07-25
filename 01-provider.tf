@@ -1,12 +1,14 @@
 terraform {
-  backend "s3" {
-    bucket = "subhamay-tf-remote-state-us-east-1"        // Bucket where to SAVE Terraform State
-    key    = "0055-borage/devl/qldb/terraform.tfstate"   // Object name in the bucket to SAVE Terraform State
-    region = "us-east-1"                                 // Region where bucket created
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.52.0"
+    }
   }
+  required_version = ">= 1.1.0"
 }
 
 provider "aws" {
   region  = "us-east-1"
-  profile = "default"
+  profile = "devl"
 }

@@ -14,3 +14,7 @@ variable "environment" {
   description = "The environment."
   type        = string
 }
+
+locals {
+  ledger_name = "${var.project_name}-${var.borage_ledger_name}-${var.environment}-${data.aws_region.current.name}"
+}
