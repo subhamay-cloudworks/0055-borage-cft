@@ -4,15 +4,27 @@ on:
 
 jobs:
     terraform:
-        name: "Terraform Destroy"
-        runs-on: ubuntu-latest
-        steps:
-            - name: Show Destroy Plan
-              id: show-destroy-plan
-              run: terraform plan -destroy
-              continue-on-error: true
+      name: "Terraform Destroy"
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+  
+        - name: Upload Configuration
+          uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+          id: apply-upload
+          with:
+            workspace: ${{ env.TF_WORKSPACE }}
+            directory: ${{ env.CONFIG_DIRECTORY }}
+
+        - name: Show Destroy Plan
+          id: show-destroy-plan
+          run: terraform plan -destroy
+          continue-on-error: true
     
-            - name: Destroy
-              id: destroy
-              run: terraform destroy -auto-approve
+        - name: Destroy
+          id: destroy
+          run: terraform destroy -auto-approve
     
